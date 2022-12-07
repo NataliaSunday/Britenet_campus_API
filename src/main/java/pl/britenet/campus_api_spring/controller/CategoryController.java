@@ -31,13 +31,16 @@ public class CategoryController {
         this.categoryService.insertCategory(category);
         return category;
     }
+
+    @PutMapping
+    public void updateCategory( @RequestBody Category category ){
+        this.categoryService.updateCategory(category);
+    }
+
     @DeleteMapping("/{categoryId}")
     public void delCategory(@PathVariable int categoryId) {
         categoryService.delCategory(categoryId);
     }
-    @PutMapping
-    public void updateCategory( @RequestBody int categoryId, String colName, String newContent ){
-     this.categoryService.updateCategory(categoryId, colName,newContent);
-    }
+
 
 }

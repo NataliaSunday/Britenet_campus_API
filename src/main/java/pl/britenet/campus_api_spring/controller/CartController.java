@@ -1,11 +1,9 @@
 package pl.britenet.campus_api_spring.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.britenet.campus_api.model.Cart;
 import pl.britenet.campus_api.service.tableService.CartService;
-
 
 import java.util.List;
 
@@ -20,6 +18,7 @@ public class CartController {
     public CartController(CartService cartService){
         this.cartService = cartService;
     }
+
     @GetMapping
     public List<Cart> getAllCarts(){
         return cartService.getCartAll();
@@ -35,8 +34,15 @@ public class CartController {
         this.cartService.insertCart(cart);
         return cart;
     }
+
+    @PutMapping
+    public void updateCart( @RequestBody Cart cart ){
+        this.cartService.updateCart(cart);
+    }
+
     @DeleteMapping("/{cartId}")
     public void delCart(@PathVariable int cartId) {
         cartService.delCart(cartId);
     }
+
 }

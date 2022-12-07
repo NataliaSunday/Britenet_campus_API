@@ -33,12 +33,14 @@ public class UsersController {
          this.userService.insertUser(user);
          return user;
     }
+
+    @PutMapping
+    public void updateUser(@RequestBody User user){
+        this.userService.updateUser(user);
+    }
+
     @DeleteMapping("/{userId}")
     public void delUser(@PathVariable int userId) {
         this.userService.delUser(userId);
     }
-
-
-
-
 }

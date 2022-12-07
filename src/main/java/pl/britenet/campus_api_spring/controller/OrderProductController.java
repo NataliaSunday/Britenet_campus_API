@@ -16,6 +16,7 @@ public class OrderProductController {
     public OrderProductController(OrderProductService orderProductService){
         this.orderProductService = orderProductService;
     }
+
     @GetMapping
     public List<OrderProduct> getOrderProductAll(){
         return this.orderProductService.getOrderProductAll();
@@ -32,9 +33,15 @@ public class OrderProductController {
         return  orderProduct;
     }
 
+    @PutMapping
+    public void updateOrderProduct( @RequestBody OrderProduct orderProduct ){
+        this.orderProductService.updateOrderProduct(orderProduct);
+    }
+
     @DeleteMapping("/{orderProductId}")
     public void delOrderProduct(@PathVariable int orderProductId) {
          orderProductService.delOrderProduct(orderProductId);
     }
+
 }
 

@@ -16,6 +16,7 @@ public class CartProductController {
     public CartProductController(CartProductService cartProductService){
         this.cartProductService = cartProductService;
     }
+
     @GetMapping
     public List<pl.britenet.campus_api.model.CartProduct> getAllCartProducts(){
         return cartProductService.getCartProductAll();
@@ -30,6 +31,11 @@ public class CartProductController {
     public CartProduct insertCartProduct(@RequestBody CartProduct cartProduct){
         this.cartProductService.insertCartProduct(cartProduct);
         return cartProduct;
+    }
+
+    @PutMapping
+    public void updateCartProduct( @RequestBody CartProduct cartProduct ){
+        this.cartProductService.updateCartProduct(cartProduct);
     }
 
     @DeleteMapping("/{orderCartProductId}")

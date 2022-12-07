@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.britenet.campus_api.model.Order;
 import pl.britenet.campus_api.service.tableService.OrderService;
 
-
 import java.util.List;
 
 @RestController
@@ -35,8 +34,14 @@ public class OrderController {
         return  order;
     }
 
+    @PutMapping
+    public void updateOrder( @RequestBody Order order ){
+        this.orderService.updateOrder(order);
+    }
+
     @DeleteMapping("/{orderId}")
     public void delOrder(@PathVariable int orderId) {
         orderService.delOrders(orderId);
     }
+
 }
