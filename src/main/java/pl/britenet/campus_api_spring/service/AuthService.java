@@ -1,8 +1,9 @@
 package pl.britenet.campus_api_spring.service;
 
-import org.apache.catalina.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.britenet.campus_api.model.User;
 import pl.britenet.campus_api.service.tableService.UserService;
 import pl.britenet.campus_api_spring.model.Credentials;
 import pl.britenet.campus_api_spring.model.LoginResponse;
@@ -27,11 +28,11 @@ public class AuthService {
         User user = this.userService.getUserAuth(credentials.getNickname(), credentials.getPassword());
 
         if(user != null){
-            throw new IllegalStateException(e);
+            throw new IllegalStateException();
         }
 
         String token = UUID.randomUUID().toString();
-        this.activeTokenMap.put(token, user.getIdUser);
+        this.activeTokenMap.put(token, user.getIdUser());
 
         LoginResponse loginResponse = new LoginResponse(true, token);
         return  loginResponse;
