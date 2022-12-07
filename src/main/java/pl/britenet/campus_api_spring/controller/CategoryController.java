@@ -37,7 +37,8 @@ public class CategoryController {
     }
     @PutMapping("/{categoryId}")
     public void updateCategory(@PathVariable int categoryId, @RequestBody String colName, String newContent ){
-     this.categoryService.updateCategory(categoryId, colName,newContent);
+
+    this.categoryService.updateCategory(categoryId, colName,newContent);
     }
 
 }
