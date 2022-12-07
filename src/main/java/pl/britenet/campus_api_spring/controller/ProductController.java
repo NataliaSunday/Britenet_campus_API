@@ -40,5 +40,9 @@ return this.productService.getProductOne(productId);
         this.productService.delProduct(productId);
     }
 
+    @PutMapping("/{productId}={colName}={newContent}")
+    public void updateProduct(@PathVariable int productId, String colName, String newContent ){
+        this.productService.updateProduct(productId, colName, newContent);
+    }
 }
 //deleteee
