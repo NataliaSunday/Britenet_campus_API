@@ -35,9 +35,9 @@ public class CategoryController {
     public void delCategory(@PathVariable int categoryId) {
         categoryService.delCategory(categoryId);
     }
-    @PutMapping("/{categoryId}")
-    public void updateCategory(@PathVariable int categoryId, @RequestBody Category category ){
-    this.categoryService.updateCategory(categoryId,category.getName(), category.getDescription());
+    @PutMapping
+    public void updateCategory( @RequestBody int categoryId, String colName, String newContent ){
+     this.categoryService.updateCategory(categoryId, colName,newContent);
     }
 
 }
