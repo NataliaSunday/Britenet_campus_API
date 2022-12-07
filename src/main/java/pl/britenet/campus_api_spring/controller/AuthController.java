@@ -2,6 +2,7 @@ package pl.britenet.campus_api_spring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pl.britenet.campus_api.model.User;
 import pl.britenet.campus_api_spring.model.Credentials;
 import pl.britenet.campus_api_spring.model.LoginResponse;
 import pl.britenet.campus_api_spring.service.AuthService;
@@ -16,7 +17,6 @@ public class AuthController {
         this.authService = authService;
     }
 
-
     @PostMapping
     public LoginResponse login(@RequestBody Credentials credentials){
         return this.authService.login(credentials);
@@ -27,9 +27,16 @@ public class AuthController {
         return this.authService.isLoggedIn(token);
     }
 
+    @PostMapping("/register")
+    public void register(@RequestBody User user){
+         this.authService.register(user);
+    }
 
-}//dokonczyc innery, dokonczyc tutaj i aurotryzavha + hashowanie hasła np metoda z klasy (w api dodac get usera i zeb sie hashowało podczas rejestarcji)
-//serwery autoryzacyjne, wypisac flowy - auth flows np. authorization code, authorization password, jwt - opak
-//czym sie roznie szyfrowanie od hashowanie (skrot kryptograficzny)
-//spotkanie o 11
+
+
+
+
+
+}//dokonczyc tutaj i aurotryzavha + hashowanie hasła np metoda z klasy (w api dodac get usera i zeb sie hashowało podczas rejestarcji)
+
 

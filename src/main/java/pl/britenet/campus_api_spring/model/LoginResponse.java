@@ -13,7 +13,7 @@ public class LoginResponse {
     public  boolean isOk(){
         return  ok;
     }
-    public String token(){
+    public String getToken(){
         return  token;
     }
 }
