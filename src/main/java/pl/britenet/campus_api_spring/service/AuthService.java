@@ -24,7 +24,7 @@ public class AuthService {
 
     public LoginResponse login(Credentials credentials){
 
-        User user = this.userService.getUser(credentials.getNickname(), credentials.getPassword());
+        User user = this.userService.getUserAuth(credentials.getNickname(), credentials.getPassword());
 
         if(user != null){
             throw new IllegalStateException(e);
