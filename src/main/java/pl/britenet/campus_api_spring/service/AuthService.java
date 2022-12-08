@@ -5,10 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.britenet.campus_api.model.User;
 import pl.britenet.campus_api.service.tableService.UserService;
-import pl.britenet.campus_api_spring.controller.UsersController;
 import pl.britenet.campus_api_spring.model.Credentials;
 import pl.britenet.campus_api_spring.model.LoginResponse;
-
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -28,19 +26,42 @@ public class AuthService {
 
     public LoginResponse login(Credentials credentials){
 
+        try{
+            MessageDigest md = MessageDigest.getInstance("SHA");
+            md.update(credentials.getPassword().getBytes());
+            byte[] byteArray = md.digest();
+            StringBuilder newCredentialsPassword = new StringBuilder();
 
-        User user = this.userService.getUserAuth(credentials.getNickname(), credentials.getPassword());
+            for(byte b : byteArray){
+                newCredentialsPassword.append(String.format("%02x", b));
+            }
 
-        if(user == null){
-            throw new IllegalStateException();
+            String newCredentialsPasswordString = newCredentialsPassword.toString();
+            User user = this.userService.getUserAuth(credentials.getNickname(),newCredentialsPasswordString);
+
+           if(user != null){
+
+               String token = UUID.randomUUID().toString();
+               this.activeTokenMap.put(token, user.getIdUser());
+
+               LoginResponse loginResponse = new LoginResponse(true, token);
+               System.out.println(token);
+               return loginResponse;
+
+           }else{
+              throw new NullPointerException();
+           }
+
+        }catch (NoSuchAlgorithmException e){
+            System.out.println(e);
+        }catch (NullPointerException e){
+            System.out.println("User doesn't exist");
         }
 
-        String token = UUID.randomUUID().toString();
-        this.activeTokenMap.put(token, user.getIdUser());
-
-        LoginResponse loginResponse = new LoginResponse(true, token);
-        System.out.println(token);
+        LoginResponse loginResponse = new LoginResponse(false, null);
+        System.out.println("Error");
         return loginResponse;
+
     }
 
     public boolean isLoggedIn(String token) {
@@ -49,26 +70,23 @@ public class AuthService {
 
     public void register(User user) {
 
-       try{
-           String password = user.getPassword();
-           MessageDigest md = MessageDigest.getInstance("SHA");
-           md.update(password.getBytes());
-           byte[] byteArray = md.digest();
-           StringBuilder newPassword = new StringBuilder();
+        try{
+            MessageDigest md = MessageDigest.getInstance("SHA");
+            md.update(user.getPassword().getBytes());
+            byte[] byteArray = md.digest();
+            StringBuilder newCredentialsPassword = new StringBuilder();
 
-           for(byte b : byteArray){
-               newPassword.append(String.format("%02x", b));
-           }
+            for(byte b : byteArray){
+                newCredentialsPassword.append(String.format("%02x", b));
+            }
 
-           user.setPassword(newPassword.toString());
-           userService.insertUser(user);
+            String newCredentialsPasswordString = newCredentialsPassword.toString();
 
-       }catch (NoSuchAlgorithmException e){
-           System.out.println("Error");
-       }
+            user.setPassword(newCredentialsPasswordString);
+            userService.insertUser(user);
 
-
-// najpierw za hashować
-        //potem dodac usera
+        }catch (NoSuchAlgorithmException e){
+            System.out.println(e.getMessage());
+        }
     }
 }

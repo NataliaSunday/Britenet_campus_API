@@ -41,4 +41,6 @@ public class DataConfiguration {
     public CartService getCartService() { return new CartService(this.databaseService); }
     @Bean
     public CartProductService getCartProductService() { return new CartProductService(this.databaseService); }
+
+
 }
