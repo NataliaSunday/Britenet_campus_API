@@ -6,7 +6,7 @@ import pl.britenet.campus_api.model.User;
 import pl.britenet.campus_api_spring.model.Credentials;
 import pl.britenet.campus_api_spring.model.LoginResponse;
 import pl.britenet.campus_api_spring.service.AuthService;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -25,6 +25,11 @@ public class AuthController {
     @GetMapping
     public boolean getUser(@RequestHeader("Authorization") String token ){
         return this.authService.isLoggedIn(token);
+    }
+    @CrossOrigin
+    @GetMapping("/userId")
+    public Integer getUserId(@RequestHeader("Authorization") String token ){
+        return this.authService.getUserId(token);
     }
 
     @PostMapping("/register")

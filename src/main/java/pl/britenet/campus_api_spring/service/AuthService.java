@@ -53,19 +53,21 @@ public class AuthService {
            }
 
         }catch (NoSuchAlgorithmException e){
-            System.out.println(e);
+            throw  new IllegalStateException(e);
+
         }catch (NullPointerException e){
             System.out.println("User doesn't exist");
+            throw  new IllegalStateException(e);
         }
 
-        LoginResponse loginResponse = new LoginResponse(false, null);
-        System.out.println("Error");
-        return loginResponse;
 
     }
 
     public boolean isLoggedIn(String token) {
         return this.activeTokenMap.containsKey(token);
+    }
+    public Integer getUserId(String token){
+         return this.activeTokenMap.get(token);
     }
 
     public void register(User user) {

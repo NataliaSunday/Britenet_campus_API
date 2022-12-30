@@ -6,7 +6,7 @@ import pl.britenet.campus_api.model.OrderProduct;
 import pl.britenet.campus_api.service.tableService.OrderProductService;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/orderProduct")
 public class OrderProductController {
@@ -43,5 +43,10 @@ public class OrderProductController {
          orderProductService.delOrderProduct(orderProductId);
     }
 
+    @GetMapping("/userOrder/{idOrder}")
+    public List<OrderProduct> getUserOrderProductById(@PathVariable int idOrder, @RequestHeader ("Authorization") String token){
+        return this.orderProductService.getUserOrderProductById(idOrder);
+
+    }
 }
 

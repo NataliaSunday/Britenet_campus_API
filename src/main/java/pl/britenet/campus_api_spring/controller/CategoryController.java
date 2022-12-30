@@ -6,7 +6,7 @@ import pl.britenet.campus_api.model.Category;
 import pl.britenet.campus_api.service.tableService.CategoryService;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/category")
 public class CategoryController {

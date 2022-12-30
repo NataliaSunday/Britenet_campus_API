@@ -8,6 +8,7 @@ import pl.britenet.campus_api.service.tableService.ProductService;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/v1/product")
 public class ProductController {
 
@@ -42,6 +43,17 @@ public class ProductController {
     @DeleteMapping("/{productId}")
     public void delProduct(@PathVariable int productId){
         this.productService.delProduct(productId);
+    }
+
+
+    @GetMapping("/productCategory={categoryId}")
+    public List<Product> getProductsByCategory(@PathVariable int categoryId){
+        return productService.getProductByCategory(categoryId);
+    }
+
+    @GetMapping("/productWhere={name}")
+    public List<Product> getProductWhere(@PathVariable String name){
+        return productService.getProductWhere(name);
     }
 
 }
